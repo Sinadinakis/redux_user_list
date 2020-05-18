@@ -15,9 +15,8 @@ Card.defaultProps = {
 }
 
 Card.propTypes = {
-    style: PropTypes.object,
-    icon: PropTypes.string.isRequired,
-    onClick: PropTypes.func
+    className: PropTypes.string,
+    children: PropTypes.node.isRequired
 };
 
 export default Card;

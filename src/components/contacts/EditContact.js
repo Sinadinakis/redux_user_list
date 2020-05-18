@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getContact } from '../../actions/contactActions';
+import { getContact, updateContact } from '../../actions/contactActions';
 import TextInputGroup from '../layout/TextInputGroup';
 
-const EditContact = ({ contact, match, history, getContact }) => {
-  const { name: contactName, email: contactEmail, phone: contactPhone } = contact; 
-  const [name, setName] = useState(contactName || '');
-  const [email, setEmail] = useState(contactEmail || '');
-  const [phone, setPhone] = useState(contactPhone || '');
+const EditContact = ({ contact, id, history, getContact, updateContact }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [errors, setErrors] = useState({});
-  const { id } = match.params;
+  const { name: contactName, email: contactEmail, phone: contactPhone } = contact;
 
   useEffect(
     () => {
       getContact(id)
-    }, [getContact,id])
+      setName(contactName || '')
+      setPhone(contactPhone || '')
+      setEmail(contactEmail || '')
+    }, [getContact, contactName, contactPhone, contactEmail, id])
 
   const clearState = () => {
     setName('');
@@ -45,12 +47,13 @@ const EditContact = ({ contact, match, history, getContact }) => {
     }
 
     const updContact = {
+      id, 
       name,
       email,
       phone
     };
 
-    getContact(updContact)
+    updateContact(updContact)
 
     //// UPDATE CONTACT ////
 
@@ -77,7 +80,7 @@ const EditContact = ({ contact, match, history, getContact }) => {
             type="email"
             placeholder="Enter Email"
             value={email}
-            onChange={e=> setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             error={errors.email}
           />
           <TextInputGroup
@@ -85,7 +88,7 @@ const EditContact = ({ contact, match, history, getContact }) => {
             name="phone"
             placeholder="Enter Phone"
             value={phone}
-            onChange={e=> setPhone(e.target.value)}
+            onChange={e => setPhone(e.target.value)}
             error={errors.phone}
           />
           <input
@@ -106,8 +109,9 @@ EditContact.propTypes = {
 }
 
 export default connect(
-  state => ({
-    contact: state.contact.contact
+  (state, props) => ({
+    contact: state.contact.contact,
+    id: props.match.params.id
   }),
-  { getContact }
+  { getContact, updateContact }
 )(EditContact);

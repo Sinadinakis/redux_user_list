@@ -1,4 +1,4 @@
-import { GET_CONTACTS, DELETE_CONTACTS, ADD_CONTACTS, GET_CONTACT } from '../actions/types';
+import { GET_CONTACTS, DELETE_CONTACTS, ADD_CONTACTS, GET_CONTACT, UPDATE_CONTACT } from '../actions/types';
 
 const initialState = {
     contacts: [],
@@ -28,6 +28,12 @@ export default function (state = initialState, action) {
                 contact: action.payload
 
         }
+        case UPDATE_CONTACT: 
+            console.log('payload',action.payload)
+            return {
+                ...state,
+                contacts: state.contacts.map( contact => contact.id === action.payload.id ? (contact = action.payload) : contact)
+            }
         default:
             return state;
     }
