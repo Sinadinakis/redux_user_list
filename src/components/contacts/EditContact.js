@@ -32,17 +32,17 @@ const EditContact = ({ contact, id, history, getContact, updateContact }) => {
 
     // Check For Errors
     if (name === '') {
-      setErrors({ errors: { name: 'Name is required' } });
+      setErrors({ name: 'Name is required' });
       return;
     }
 
     if (email === '') {
-      setErrors({ errors: { email: 'Email is required' } });
+      setErrors({ email: 'Email is required' });
       return;
     }
 
     if (phone === '') {
-      setErrors({ errors: { phone: 'Phone is required' } });
+      setErrors({ phone: 'Phone is required' });
       return;
     }
 
@@ -55,12 +55,10 @@ const EditContact = ({ contact, id, history, getContact, updateContact }) => {
 
     updateContact(updContact)
 
-    //// UPDATE CONTACT ////
-
     clearState();
     history.push('/');
   };
-
+  console.log(errors.name)
   return (
     <div className="card mb-3">
       <div className="card-header">Edit Contact</div>

@@ -25,17 +25,17 @@ const AddContact = ({ addContacts, history }) => {
 
     // Check For Errors
     if (name === '') {
-      setErrors({ errors: { name: 'Name is required' } });
+      setErrors({ name: 'Name is required' });
       return;
     }
 
     if (email === '') {
-      setErrors({ errors: { email: 'Email is required' } });
+      setErrors({ email: 'Email is required' });
       return;
     }
 
     if (phone === '') {
-      setErrors({ errors: { phone: 'Phone is required' } });
+      setErrors({ phone: 'Phone is required' });
       return;
     }
 
@@ -51,6 +51,7 @@ const AddContact = ({ addContacts, history }) => {
     history.push('/');
   };
 
+  console.log('name', errors.name)
 
   return (
     <Card>
